@@ -1,3 +1,5 @@
+% LEGACY: episode-level gain tuning, not online residual control.
+% See residual_rl/ and README.md for the separate residual workflow.
 %% train_rl_fault_gains.m
 % Fresh-start RL training for the FAULT scenario model (load increment
 % at 6s instead of 4s). Assumes this model is a copy of your already-

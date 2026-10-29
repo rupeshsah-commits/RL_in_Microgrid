@@ -1,3 +1,5 @@
+% LEGACY: episode-level gain tuning, not online residual control.
+% See residual_rl/ and README.md for the separate residual workflow.
 %% continue_training_fault.m
 % Resumes training for the FAULT scenario from trained_fault_agent.mat.
 % Mirrors continue_training.m's proven pattern (kept separate so the
