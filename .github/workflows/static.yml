@@ -1,0 +1,23 @@
+name: Static project checks (no MATLAB)
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install miss_hit==0.9.44
+      - run: python tools/static_review.py
+      - run: python tools/audit_model.py
+      - run: python tools/check_project.py
+      - run: python tools/check_matlab_templates.py --output /tmp/microgrid-templates
+      - run: mh_lint --brief residual_rl RUN_*.m *.m /tmp/microgrid-templates
+      - run: python tools/package_project.py --output distributions/RL_in_Microgrid_Residual_RL_Project.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RL_in_Microgrid_Residual_RL_Project
+          path: distributions/RL_in_Microgrid_Residual_RL_Project.zip

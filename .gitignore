@@ -3,3 +3,5 @@ results/
 __pycache__/
 *.slxc
 slprj/
+
+# Distribution ZIPs are intentionally tracked; generated caches/results are not.

@@ -1,0 +1,9 @@
+function p = residual_parameters(c)
+% Flat numeric struct: safe to embed as a constant in MATLAB Function blocks.
+names={'f0','v0','Prated','Qrated','Pbase','Qbase','Ts','warmup','fScale','vScale', ...
+ 'obsClip','limits','slew','smoothingTau','tripHz','tripVoltagePU','softHz', ...
+ 'softVoltagePU','softPowerPU','terminalPenalty','rewardWeights','priorityMax', ...
+ 'secondaryGain','kV','kQshare','secondaryVLimit','secondaryWLimit','adjacency'};
+for i=1:numel(names), p.(names{i})=c.(names{i}); end
+p.adaptiveWeights=double(c.adaptiveWeights); p.safetyEnabled=double(c.safetyEnabled);
+end
