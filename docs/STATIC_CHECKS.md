@@ -13,7 +13,7 @@ Executed in the cloud:
 | ZIP CRC / XML | PASS: 53 entries; all 42 XML documents parsed |
 | Model inventory | PASS: 1,041 archived blocks in `model_inventory.json` |
 | Controller signal map | Static connections, gains, signs and tags checked; runtime map gate remains NOT RUN |
-| MATLAB source syntax | PASS: MISS_HIT 0.9.44; 49 MATLAB files |
+| MATLAB source syntax | PASS: MISS_HIT 0.9.44; 50 MATLAB files |
 | Embedded MATLAB Function templates | PASS: five extracted templates parsed; constant struct typing NOT checked |
 | Python source syntax | PASS: `python3 -m py_compile tools/*.py` |
 | Required-file inventory | PASS: `tools/check_project.py` |
@@ -41,3 +41,10 @@ RUN_EVALUATION
 Additional model tests: `runtests('residual_rl/tests/test_model_runtime.m')`.
 A setup report says PASS only after the actual local checks return successfully.
 No result table, graph or control-performance claim is substituted for missing runtime evidence.
+
+Prerequisite-gate regression fix: the supplied local R2025a log showed installed RL
+Toolbox but a zero advisory feature query; execution stopped before model validation.
+The revised gate checks an actual TD3 constructor and preserves genuine failures.
+Four additional MATLAB unit cases cover zero-hint/working-API, real probe failure,
+missing installed product and missing API. Those tests are NOT RUN in the cloud.
+No original user log or licence-number header is copied into this repository.

@@ -104,3 +104,32 @@ function testDelayedInvalidActionTerminates(t)
 [r,d,~]=residual_reward(x,zeros(8,1),zeros(8,1),1,p,a);
 verifyTrue(t,d); verifyTrue(t,isfinite(r));
 end
+
+function products=installedProducts()
+names={'MATLAB','Simulink','Simscape','Simscape Electrical', ...
+ 'Reinforcement Learning Toolbox','Deep Learning Toolbox'};
+products=struct('Name',names);
+end
+function testZeroLicenseHintsDoNotRejectWorkingAPI(t)
+report=check_toolbox_access(installedProducts(),@(name) false, ...
+ @() struct('status','PASS'),@(name) true);
+verifyTrue(t,all(report.installed)); verifyFalse(t,any(report.licenseHints));
+verifyEqual(t,report.rlConstructorProbe.status,'PASS');
+end
+function testRealRLAccessFailureIsNotSuppressed(t)
+verifyError(t,@() check_toolbox_access(installedProducts(),@(name) true, ...
+ @deniedRLProbe,@(name) true),'ResidualRL:RLAccessProbeFailed');
+end
+function result=deniedRLProbe()
+error('ResidualRL:TestLicenseDenial','Simulated real constructor access denial.');
+result=[]; %#ok<UNRCH>
+end
+function testMissingInstalledProductFails(t)
+products=installedProducts(); products(5)=[];
+verifyError(t,@() check_toolbox_access(products,@(name) true, ...
+ @() struct('status','PASS'),@(name) true),'ResidualRL:MissingProducts');
+end
+function testMissingRLAPIWithInstalledProductFails(t)
+verifyError(t,@() check_toolbox_access(installedProducts(),@(name) true, ...
+ @() struct('status','PASS'),@(name) false),'ResidualRL:MissingRLAPI');
+end

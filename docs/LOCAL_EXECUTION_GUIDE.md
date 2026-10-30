@@ -3,7 +3,8 @@
 1. Download the branch or project ZIP, extract it, and open licensed MATLAB R2025a
    (models saved in Update 1). Set Current Folder to the extracted repository root.
 2. Run `RUN_ME_FIRST`. It adds project-relative paths, prints release/products,
-   tests product availability without printing credentials, verifies SHA-256,
+   checks installed products and advisory licence hints without printing the licence-number
+   header, probes a small TD3 constructor without training, verifies SHA-256,
    checks mappings, builds separate models, compiles, runs original/zero equivalence
    and a bounded probe, and validates the RL environment. No training starts.
 3. Inspect `results/logs/setup_*.txt`, `setup_report.mat`, `validation.mat` and

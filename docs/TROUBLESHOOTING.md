@@ -12,8 +12,19 @@ error and its complete stack; do not bypass assertions to label validation passe
 - Missing MGLib: resolve the original library reference locally using your project's
   legitimate library files and MATLAB path. Do not replace dq-to-abc with an
   unverified transform or change modulation gains to hide the failure.
-- Product unavailable: inspect `ver` and the locally configured products. No
-  passwords, university credentials, licence keys or tokens belong in this project.
+- Installed Reinforcement Learning Toolbox but the old product-group-5 check
+  returns zero: the old gate incorrectly treated a feature-name query as definitive
+  product unavailability. Update the project and rerun RUN_ME_FIRST. The new check
+  distinguishes installed products, advisory feature hints, accessible APIs and
+  actual construction of a small default TD3 agent. A zero hint alone no longer
+  aborts setup. Real constructor failures still stop setup with their original cause.
+  Construction is not training or full licence/Simulink validation; later operations
+  remain required. Do not delete the gate or force licence hints to true.
+- Missing installed product or real constructor failure: use the named product/API
+  and original error in the diagnostic to check the local installation/path or
+  normal product-access configuration. No passwords, university credentials,
+  licence keys or tokens belong in this project. Setup prints product names,
+  versions and releases from the `ver` return value, not its licence-number header.
 - TD3 option/API errors: this code targets R2025a. Use the local `doc` for the exact
   failing RL option. Keep actor 42x1→8x1, two independent critics, agent sample time
   and plant-side safety contract unchanged. Static parsing cannot validate toolbox APIs.
