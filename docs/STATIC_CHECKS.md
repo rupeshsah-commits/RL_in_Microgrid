@@ -48,3 +48,10 @@ The revised gate checks an actual TD3 constructor and preserves genuine failures
 Four additional MATLAB unit cases cover zero-hint/working-API, real probe failure,
 missing installed product and missing API. Those tests are NOT RUN in the cloud.
 No original user log or licence-number header is copied into this repository.
+
+The next supplied local log confirms the TD3 constructor probe succeeded. Unit
+validation then stopped on exact-zero comparisons of nominal floating-point errors
+(about 3.6e-14 normalized, 1.3e-27 squared). Tests now use precision-derived
+comparison tolerances, plus a regression test retaining a real 1e-8 Hz error.
+This revised MATLAB suite is NOT RUN in the cloud; no compilation or simulation
+success is inferred from the supplied prerequisite/test output.

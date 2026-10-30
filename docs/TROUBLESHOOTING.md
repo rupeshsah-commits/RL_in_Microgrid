@@ -47,3 +47,14 @@ error and its complete stack; do not bypass assertions to label validation passe
   training pool is launched automatically.
 - Safety fallback may jump to zero and exceed nominal slew. This is deliberate;
   report emergency events separately from ordinary rate/smoothing interventions.
+
+- Nominal-state unit comparisons on R2025a: converting `2*pi*60` back to Hz may
+  leave an error of about 7e-15 Hz, giving a normalized observation near -3.6e-14
+  and a squared cost near 1.3e-27. Exact-zero comparisons in the old observation,
+  perfect-reward and isolated-objective tests rejected normal floating-point
+  roundoff. Updated comparisons derive absolute tolerances from double-precision
+  spacing, normalization, squaring and reward weighting. Production arithmetic,
+  exact fallback zeros, safety thresholds and model-equivalence limits are unchanged.
+  Update the project and rerun RUN_ME_FIRST; do not clamp small physical errors
+  to zero or remove assertions. The later mock licence-hint lines in unit-test
+  output are controlled test fixtures, not fresh findings about your installation.
