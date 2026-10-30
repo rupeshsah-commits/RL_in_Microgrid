@@ -58,3 +58,12 @@ error and its complete stack; do not bypass assertions to label validation passe
   Update the project and rerun RUN_ME_FIRST; do not clamp small physical errors
   to zero or remove assertions. The later mock licence-hint lines in unit-test
   output are controlled test fixtures, not fresh findings about your installation.
+
+- Reset error `'InductivePower' is not a valid block path`: the earlier code
+  incorrectly passed several name/value pairs after one block path to
+  `SimulationInput.setBlockParameter`. Unlike `set_param`, this API expects
+  block-path/name/value triples. The updated reset uses one call per parameter,
+  for both load powers and breaker settings. No block is renamed and the
+  scenario values/plant files are unchanged. A local regression test checks all
+  nine stored overrides without simulation:
+  `runtests('residual_rl/tests/test_model_runtime.m','ProcedureName','testResetOverridesStoredWithoutSimulation')`.

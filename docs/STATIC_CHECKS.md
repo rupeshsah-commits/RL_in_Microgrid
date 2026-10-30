@@ -55,3 +55,9 @@ validation then stopped on exact-zero comparisons of nominal floating-point erro
 comparison tolerances, plus a regression test retaining a real 1e-8 Hz error.
 This revised MATLAB suite is NOT RUN in the cloud; no compilation or simulation
 success is inferred from the supplied prerequisite/test output.
+
+The latest supplied R2025a log shows the unit suite completed successfully, then
+reset construction failed on the multi-parameter setBlockParameter call before
+simulation. Load and breaker overrides now use one block/name/value triple per
+call. A stored-override regression test is provided but NOT RUN here. Revised
+reset execution, generated-model validation and simulations remain pending locally.

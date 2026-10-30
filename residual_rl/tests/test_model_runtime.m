@@ -20,3 +20,33 @@ end
 function testZeroEquivalenceAndFiniteSimulation(t)
 report=run_zero_action_test(); verifyTrue(t,all([report.passed]));
 end
+
+function testResetOverridesStoredWithoutSimulation(t)
+c=residual_config(); model=c.sourceName;
+assert(~bdIsLoaded(model),'Close the original model before this test.');
+load_system(c.source); cleanup=onCleanup(@() close_system(model,0)); %#ok<NASGU>
+s=residual_scenario(c,'reactive',c.validationSeeds(1));
+s.initialBreaker='closed'; s.switchTimes=6.5; s.Lscale=1.03;
+in=residual_reset(Simulink.SimulationInput(model),c,s);
+expected={ [model '/Load 5'],'ActivePower',num2str(s.loadP,17); ...
+ [model '/Load 5'],'InductivePower',num2str(s.loadQ,17); ...
+ [model '/Load 5'],'CapacitivePower','0'; ...
+ [model '/Three-Phase Breaker1'],'InitialState','closed'; ...
+ [model '/Three-Phase Breaker1'],'SwitchTimes',mat2str(s.switchTimes,17)};
+for i=1:4
+ expected(end+1,:)={sprintf('%s/DG%d/L1',model,i),'Inductance',num2str(4e-3*s.Lscale,17)}; %#ok<AGROW>
+end
+parameters=in.BlockParameters;
+verifyEqual(t,numel(parameters),size(expected,1));
+for i=1:size(expected,1)
+ matches=false(size(parameters));
+ for j=1:numel(parameters)
+  path=parameters(j).BlockPath;
+  if isa(path,'Simulink.BlockPath'), path=getBlock(path,1); end
+  matches(j)=strcmp(path,expected{i,1}) && strcmp(parameters(j).Name,expected{i,2}) ...
+   && strcmp(parameters(j).Value,expected{i,3});
+ end
+ verifyEqual(t,nnz(matches),1);
+end
+verifyEqual(t,residual_hash(c.source),c.sourceSHA256);
+end
