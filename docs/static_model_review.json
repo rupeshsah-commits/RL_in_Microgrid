@@ -1,0 +1,44 @@
+{
+  "original": "Load_Changes_AC_Droop_four_inverter.slx",
+  "sha256": "3ca2e549c1606e2d371ce172c16f06c50f1d0f3ee690d6c7a8b004fee8cd3123",
+  "runtime_validation": "PENDING: MATLAB/Simulink not installed or run",
+  "static_checks": [
+    "ZIP CRC integrity",
+    "All XML parsed",
+    "Eight additive secondary injection points",
+    "Eight measurement tags",
+    "60 Hz and 338.8460811 V references",
+    "Switched Load 5 and 6 s breaker event"
+  ],
+  "secondary_connections": [
+    "DG1/Gain -> Sum2/2 (+)",
+    "DG1/Gain9 -> Sum6/2 (+)",
+    "DG2/Gain -> Sum2/2 (+)",
+    "DG2/Gain9 -> Sum6/2 (+)",
+    "DG3/Gain -> Sum2/2 (+)",
+    "DG3/Gain9 -> Sum6/2 (+)",
+    "DG4/Gain -> Sum2/2 (+)",
+    "DG4/Gain9 -> Sum6/2 (+)"
+  ],
+  "controller_scripts": {
+    "simulink/stateflow/chart_21.xml": [
+      "function [y2,y3  ]  = fcn(w1,w2,P1,P2,w3,P3,Vd1,Vd2,Vd3,Q1,Q2,Q3)\ny2 = ((w1-w2)+(w3-w2))+(1e-4)*((P1-P2)+(P3-P2));\ny3 = (1e-4)*((Q1-Q2)+(Q3-Q2));\nend"
+    ],
+    "simulink/stateflow/chart_40.xml": [
+      "function [y1,y2]  = fcn(w1,w2,P1,P2,w4,P4,Vd1,Vd2,Vd4,Q1,Q2,Q4)\ny1 = ((2*pi*60-w1)+(w2-w1)+(w4-w1))+(1e-4)*((P2-P1)+(P4-P1));\ny2 = (1e-4)*((Q2-Q1)+(Q4-Q1));\nend"
+    ],
+    "simulink/stateflow/chart_59.xml": [
+      "function [y3,y4 ]  = fcn(w3,w2,P3,P2,w4,P4,Vd2,Vd3,Vd4,Q2,Q3,Q4)\ny3 = ((w4-w3)+(w2-w3))+(1e-4)*((P4-P3)+(P2-P3));\ny4=(1e-4)*((Q4-Q3)+(Q2-Q3));\nend"
+    ],
+    "simulink/stateflow/chart_78.xml": [
+      "function [y4,y5]  = fcn(w1,w4,P1,P4,w3,P3,Vd1,Vd3,Vd4,Q1,Q3,Q4)\ny4 = ((w3-w4)+(w1-w4))+(1e-4)*((P1-P4)+(P3-P4));\ny5 = (1e-4)*((Q1-Q4)+(Q3-Q4));\nend"
+    ]
+  },
+  "xml_files_parsed": 42,
+  "archive_entries": 53,
+  "root_callbacks": {
+    "InitFcn": "K1=1e-4;"
+  },
+  "saved_release": "R2025a Update 1 (25.1.0.2973910)",
+  "external_library_reference": "MGLib/Subsystem: resolution must be checked locally"
+}

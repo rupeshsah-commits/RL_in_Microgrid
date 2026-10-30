@@ -1,3 +1,5 @@
+% LEGACY: episode-level gain tuning, not online residual control.
+% See residual_rl/ and README.md for the separate residual workflow.
 %% evaluate_fault_policy.m
 % Gets the trained agent's actual, noise-free recommended gains (not a
 % noisy exploratory sample from training), applies them, and runs one
@@ -10,6 +12,9 @@ agentFile = 'trained_fault_agent.mat';
 
 loaded = load(agentFile, 'agent');
 agent = loaded.agent;
+agent.UseExplorationPolicy = false;
+% Load first: the model PreLoadFcn assigns baseline gains.
+load_system(modelName);
 
 %% 1. Get the agent's deterministic action (no exploration noise)
 % Observation at the start of an episode is always zeros(4,1) in this
@@ -33,7 +38,6 @@ assignin('base', 'k_couple', k_couple);
 assignin('base', 'k_power',  k_power);
 assignin('base', 'k_corr',   k_corr);
 
-load_system(modelName);
 set_param(modelName, 'StopTime', '15');
 simOut = sim(modelName);
 
